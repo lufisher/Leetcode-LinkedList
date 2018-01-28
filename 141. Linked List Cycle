@@ -1,0 +1,22 @@
+//方法一：
+//注意，这个方法，我认为leetcode上的参考答案不行的
+//leetcode上的参考答案1，认为可以用一个哈希表来判断，但是问题是链表里面的元素可以是相同的，因此答案1明显是不行的
+//leetcode参考答案2的解法对于一个两个元素，不循环的链表是行不通的，必须加一个判断
+class Solution {
+public:
+	bool hasCycle(ListNode *head) {
+		if (head == NULL || head->next == NULL)
+			return false;
+		ListNode* slow = head, *fast = head->next;
+		while (slow != fast) {
+			if (fast == NULL||fast->next == NULL)
+				return false;
+			slow = slow->next;
+			if (slow->next == NULL)//这里必须加一个判断，因为有可能slow->next是空的，如果这样，下面fast=fast->next->next会出错
+				return false;
+			else
+				fast = fast->next->next;
+		}
+		return true;
+	}
+};
