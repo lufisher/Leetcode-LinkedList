@@ -1,0 +1,27 @@
+Reverse a singly linked list.
+
+click to show more hints.
+
+Hint:
+A linked list can be reversed either iteratively or recursively. Could you implement both?
+//方法一：遍历整个链表，然后并不是真正反转，而是把值反转，链表之间关系并没有改变 O(n)
+class Solution {
+public:
+	ListNode* reverseList(ListNode* head) {
+		if (head == NULL)
+			return NULL;
+		vector<int> reverse;
+		ListNode* pnode = head;
+		while (pnode != NULL) {
+			reverse.push_back(pnode->val);
+			pnode = pnode->next;
+		}
+		pnode = head;
+		for (int i = reverse.size() - 1; i >= 0; --i) {
+			pnode->val = reverse[i];
+			pnode = pnode->next;
+		}
+		return head;
+	}
+};
+//方法二：这个反转算是真正的反转，就是给链表多加了一条指示链
