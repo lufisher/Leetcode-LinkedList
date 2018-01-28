@@ -1,0 +1,67 @@
+Write a program to find the node at which the intersection of two singly linked lists begins.
+
+
+For example, the following two linked lists:
+
+A:          a1 → a2
+                   ↘
+                     c1 → c2 → c3
+                   ↗            
+B:     b1 → b2 → b3
+begin to intersect at node c1.
+
+
+Notes:
+
+If the two linked lists have no intersection at all, return null.
+The linked lists must retain their original structure after the function returns.
+You may assume there are no cycles anywhere in the entire linked structure.
+Your code should preferably run in O(n) time and use only O(1) memory.
+//方法一：最简单粗暴的方法，遍历的方法从头判断 O(mn)
+class Solution {
+public:
+	ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+		if (headA == NULL || headB == NULL)
+			return NULL;
+		while (headA != NULL) {
+			ListNode* pb = headB;
+			while (pb != NULL) {
+				if (headA == pb)
+					return headA;
+				pb = pb->next;
+			}
+			headA = headA->next;
+		}
+		return NULL;
+	}
+};
+//注意，leetcode上的用哈希表的方法是不行的，因为有可能两条链的某些节点值是相同的，如果完全不同，那当然是可以
+//Approach #2 (Hash Table) [Accepted]
+//Traverse list A and store the address / reference to each node in a hash set. Then check every node 
+//bi in list B: if bi appears in the hash set, then bi is the intersection node.
+//方法二：用两个指针来进行是否来进行判断。在关系到有回环的链表，或者相交的链表的题中，寻找相交点，这种方法都可以考虑使用
+//用一个指针a指向a链表，用指针b指向b链表，然后同时往下面方向进行。如果a到底，则换到b继续往下。如果b到底，则换到a继续往下。
+//最多经过一轮交换后，如果有交点，必然两个指针a，b会相遇
+class Solution {
+public:
+	ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+		if (headA == NULL || headB == NULL)
+			return NULL;
+		ListNode* a = headA, *b = headB;
+		while (true) {
+			if (a == b&&a!=NULL)
+				return a;
+			if (a == b&&a == NULL)
+				return NULL;
+			if (a == NULL) {
+				a = headB;
+			}
+			else
+				a = a->next;
+			if (b == NULL)
+				b = headA;
+			else
+				b = b->next;
+		}
+	}
+};
