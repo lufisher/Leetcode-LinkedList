@@ -1,0 +1,22 @@
+//方法一：这题需要注意的是，头节点也是需要判断的，也有可能会被删除。因此需要新建一个新的头，然后在程序执行的最后返回一个新的头
+class Solution {
+public:
+	ListNode* removeElements(ListNode* head, int val) {
+		if (head == NULL)//空链表的情况
+			return NULL;
+		if (head->next == NULL&&head->val == val)//一个节点的情况
+			return NULL;
+		if (head->next == NULL&&head->val != val)
+			return head;
+		ListNode* pnode = new ListNode(0);//大于等于两个节点的情况
+		ListNode* pnewhead = pnode;
+		pnode->next = head;
+		while (pnode->next != NULL) {
+			if (pnode->next->val == val)
+				pnode->next = pnode->next->next;
+			else
+				pnode = pnode->next;
+		}
+		return pnewhead->next;
+	}
+};
