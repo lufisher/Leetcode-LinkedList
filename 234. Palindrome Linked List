@@ -1,0 +1,26 @@
+//方法一：自己的方法，用一个递归函数来判断
+//leetcode上说的是Time Limit Exceeded，但我感觉应该不会吧，时间复杂度是O(n)应该
+class Solution {
+public:
+	bool isPalindrome(ListNode* head) {
+		if (head == NULL)//空链表情况
+			return true;
+		if (head->next == NULL )//一个节点情况
+			return true;
+		if (head->next != NULL&&head->next->next == NULL)//两个节点情况
+			if (head->val == head->next->val)
+				return true;
+			else
+				return false;
+		ListNode* pnode = head;
+		while (pnode->next->next != NULL)
+			pnode = pnode->next;
+		if (pnode->next->val != head->val)
+			return false;
+		else {
+			pnode->next = NULL;
+			return isPalindrome(head->next);
+		}
+	}
+};
+//另外方法：其他的方法都是先把链表反转，再作比较，这样其实我感觉不是很好，不方便
