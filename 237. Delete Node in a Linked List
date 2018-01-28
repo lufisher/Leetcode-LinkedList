@@ -1,0 +1,15 @@
+Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
+
+Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are given the third node with value 3, the linked list should become 1 -> 2 -> 4 after calling your function.
+
+//方法一：乍看之下，似乎没有回溯的指针没法删除，但是事实上，不一定是要删这个节点，而是把这个节点的值
+//替换成下一个节点的值，删除下一个节点，是一样的效果 O(1)
+class Solution {
+public:
+	void deleteNode(ListNode* node) {//这个node是要被删除的那个node，不是链头，而且这个node肯定不是链尾
+		node->val = node->next->val;
+		ListNode* pnode = node->next;
+		node->next = node->next->next;
+		delete pnode;
+	}
+};
