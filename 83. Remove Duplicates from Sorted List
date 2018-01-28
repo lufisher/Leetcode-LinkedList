@@ -1,0 +1,27 @@
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+For example,
+Given 1->1->2, return 1->2.
+Given 1->1->2->3->3, return 1->2->3.
+//方法一：就是很简单的改变链 O(n)
+class Solution {
+public:
+	ListNode* deleteDuplicates(ListNode* head) {
+		if (head == NULL || head->next == NULL)
+			return head;
+		ListNode* pfront, *pback;
+		pfront = head;
+		pback = head->next;
+		while (pback != NULL) {
+			while (pback != NULL&&pback->val == pfront->val)//这里判断要把判断pback不等于空放在前面，因为如果他是空，后面这个判断就不需要进行了
+      //而如果进行后面那个判断，由于是空指针，会出错
+				pback = pback->next;
+			pfront->next = pback;
+			if (pback != NULL) {
+				pfront = pfront->next;
+				pback = pfront->next;
+			}
+		}
+		return head;
+	}
+};
