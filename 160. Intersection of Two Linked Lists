@@ -39,7 +39,7 @@ public:
 //Approach #2 (Hash Table) [Accepted]
 //Traverse list A and store the address / reference to each node in a hash set. Then check every node 
 //bi in list B: if bi appears in the hash set, then bi is the intersection node.
-//方法二：用两个指针来进行是否来进行判断。在关系到有回环的链表，或者相交的链表的题中，寻找相交点，这种方法都可以考虑使用
+//方法二：用两个指针来进行是否来进行判断。在关系到有回环的链表，或者相交的链表的题中，寻找相交点，这种方法都可以考虑使用 O(m+n)
 //用一个指针a指向a链表，用指针b指向b链表，然后同时往下面方向进行。如果a到底，则换到b继续往下。如果b到底，则换到a继续往下。
 //最多经过一轮交换后，如果有交点，必然两个指针a，b会相遇
 class Solution {
