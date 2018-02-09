@@ -1,0 +1,79 @@
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+Example
+
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+Explanation: 342 + 465 = 807.
+
+//方法一：这题其实不难，其实就是烦。最直观的方法就是把结果按照加法法则相加，然后加在其中一个链表中返回即可
+//这题就烦在判断条件很多很杂，不过想清楚了就很简单
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        auto p1=l1,p2=l2;
+        while(true){//需要一个没有条件的循环，循环会在里面退出
+            if(p1->val+p2->val<10){//如果该位相加不需要进位
+                if(p1->next==NULL&&p2->next==NULL){
+                    p1->val=p1->val+p2->val;
+                    return l1;
+                }
+                else if(p1->next==NULL&&p2->next!=NULL){
+                    p1->val=p1->val+p2->val;
+                    p1->next=new ListNode(0);
+                    p1=p1->next;
+                    p2=p2->next;
+                }
+                else if(p1->next!=NULL&&p2->next==NULL){
+                    p1->val=p1->val+p2->val;
+                    p2->next=new ListNode(0);
+                    p1=p1->next;
+                    p2=p2->next;
+                }
+                else{
+                    p1->val=p1->val+p2->val;
+                    p1=p1->next;
+                    p2=p2->next;
+                }
+            }
+            else {//如果该位相加需要进位
+                if(p1->next==NULL&&p2->next==NULL){
+                    p1->val=p1->val+p2->val-10;
+                    p1->next=new ListNode(1);
+                    p2->next=new ListNode(0);
+                    p1=p1->next;
+                    p2=p2->next;
+                }
+                else if(p1->next==NULL&&p2->next!=NULL){
+                    p1->val=p1->val+p2->val-10;
+                    p1->next=new ListNode(1);
+                    p1=p1->next;
+                    p2=p2->next;
+                }
+                else if(p1->next!=NULL&&p2->next==NULL){
+                    p1->val=p1->val+p2->val-10;
+                    p2->next=new ListNode(0);
+                    p1=p1->next;
+                    p2=p2->next;
+                    ++(p1->val);
+                }
+                else{
+                    p1->val=p1->val+p2->val-10;
+                    p1=p1->next;
+                    p2=p2->next;
+                    ++(p1->val);
+                }
+            }
+        }
+    }
+};
